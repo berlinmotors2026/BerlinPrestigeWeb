@@ -559,9 +559,6 @@ var name=document.getElementById('bookName').value;var phone=document.getElement
 var city=document.getElementById('bookCity').value;var ds=selDate.getDate()+'/'+(selDate.getMonth()+1)+'/'+selDate.getFullYear();
 var dk=selDate.getFullYear()+'-'+(selDate.getMonth()+1)+'-'+selDate.getDate();saveSlot(dk,selTime);
 fetch('https://formsubmit.co/ajax/Berlinprestige2026@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({_subject:'Nueva reunion agendada - Berlin Prestige',Nombre:name,WhatsApp:phone,Ciudad:city,Fecha:ds,Hora:selTime,message:'Reunion con Nico el '+ds+' a las '+selTime})}).catch(function(){});
-var waPhone=phone.replace(/[\s\-\(\)]/g,'');if(waPhone.indexOf('+')===-1){if(waPhone.charAt(0)==='0')waPhone=waPhone.substring(1);waPhone='54'+waPhone;}else{waPhone=waPhone.replace('+','');}
-var waMsg='Hola '+name+'! Soy Nico de Berlin Prestige. Ya quedo agendada tu llamada para el '+ds+' a las '+selTime+'. Preparate para arrancar. Cualquier duda escribime por aca.';
-window.open('https://wa.me/'+waPhone+'?text='+encodeURIComponent(waMsg),'_blank');
 document.getElementById('bookingForm').style.display='none';var cm=document.getElementById('confirmMsg');cm.style.display='block';
 document.getElementById('confirmDetails').textContent='Reunion con Nico el '+ds+' a las '+selTime+'.';
 }
