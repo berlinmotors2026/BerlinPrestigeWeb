@@ -140,6 +140,11 @@ margin-top:4rem;animation:fadeInUp .8s ease-out .6s both;
 .section-sub{font-size:1rem;color:var(--white-muted);max-width:550px;margin:0 auto;font-weight:300;line-height:1.7}
 .section-line{width:50px;height:1px;background:var(--gold);margin:1.5rem auto 0}
 
+/* VIDEOS */
+.videos-grid{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:2rem;justify-items:center}
+.video-wrapper{width:100%;max-width:400px;aspect-ratio:9/16;overflow:hidden;border:1px solid var(--gray)}
+.video-wrapper iframe{width:100%;height:100%;border:none}
+
 /* HISTORIA */
 .historia{max-width:650px;margin:0 auto}
 .historia-text h3{font-family:var(--serif);font-size:1.8rem;font-weight:600;margin-bottom:1rem;line-height:1.3}
@@ -335,6 +340,7 @@ align-items:center;justify-content:center;gap:2rem;
 .stat{border-right:none;border-bottom:1px solid var(--gray);padding:1rem 0}
 .stat:last-child{border-bottom:none}
 .historia{grid-template-columns:1fr;gap:2rem}
+.videos-grid{grid-template-columns:1fr}
 .pasos-grid{grid-template-columns:1fr}
 .sistema-grid{grid-template-columns:1fr}
 .resultados-grid{grid-template-columns:repeat(2,1fr);gap:1.5rem}
@@ -392,6 +398,23 @@ align-items:center;justify-content:center;gap:2rem;
 
 <!-- HISTORIA -->
 <section class="section" id="historia">
+<div class="section-header reveal">
+<span class="section-tag">Conoceme</span>
+<h2 class="section-title">Mirá cómo <span>funciona</span></h2>
+<div class="section-line"></div>
+</div>
+<div class="videos-grid reveal">
+<div class="video-wrapper">
+<iframe src="https://www.instagram.com/reel/DXhvJQOD46k/embed/" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen="true"></iframe>
+</div>
+<div class="video-wrapper">
+<iframe src="https://www.instagram.com/reel/DWy5PveDW8s/embed/" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen="true"></iframe>
+</div>
+</div>
+</section>
+
+<!-- MI HISTORIA -->
+<section class="section">
 <div class="section-header reveal">
 <span class="section-tag">Mi Historia</span>
 <h2 class="section-title">De la cancha a la <span>consignación</span></h2>
@@ -724,6 +747,11 @@ fetch('https://formsubmit.co/ajax/Berlinprestige2026@gmail.com',{
 method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
 body:JSON.stringify({_subject:'Nueva reunion agendada - Berlin Prestige',Nombre:name,WhatsApp:phone,Ciudad:city,Fecha:ds,Hora:selTime,message:'Reunion con Nico el '+ds+' a las '+selTime})
 }).catch(function(){});
+// WhatsApp al cliente
+var waPhone=phone.replace(/[\s\-\(\)]/g,'');
+if(waPhone.indexOf('+')===-1){if(waPhone.charAt(0)==='0')waPhone=waPhone.substring(1);waPhone='54'+waPhone;}else{waPhone=waPhone.replace('+','');}
+var waMsg='Hola '+name+'! Soy Nico de Berlin Prestige. Ya quedo agendada tu llamada para el '+ds+' a las '+selTime+'. Preparate para arrancar. Cualquier duda escribime por aca.';
+window.open('https://wa.me/'+waPhone+'?text='+encodeURIComponent(waMsg),'_blank');
 document.getElementById('bookingForm').style.display='none';
 var cm=document.getElementById('confirmMsg');cm.style.display='block';
 document.getElementById('confirmDetails').textContent='Reunion con Nico el '+ds+' a las '+selTime+'.';
