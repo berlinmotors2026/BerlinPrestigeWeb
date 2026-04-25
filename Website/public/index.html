@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Berlin Prestige Capacitaciones - Vendé autos que no son tuyos. Sistema completo de consignación.">
+<title>Berlin Prestige Capacitaciones</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--gold:#C9A84C;
+--gold-light:#E4C870;
+--gold-dark:#A68B3A;
+--gold-subtle:rgba(201,168,76,0.08);
+--black:#0A0A0A;
+--black-soft:#111;
+--black-card:#141414;
+--black-card-hover:#1a1a1a;
+--white:#F5F0E8;
+--white-muted:#9E9688;
+--gray:#2A2A2A;
+--serif:'Cormorant Garamond',Georgia,serif;
+--sans:'Outfit',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{
+font-family:var(--sans);background:var(--black);color:var(--white);
+line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-thumb{background:var(--gold-dark);border-radius:3px}
+
+/* GRAIN */
+body::after{
+content:'';position:fixed;top:0;left:0;width:100%;height:100%;
+pointer-events:none;z-index:9999;opacity:.025;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* NAV */
+nav{
+position:fixed;top:0;left:0;width:100%;z-index:1000;
+padding:1.1rem 2rem;
+background:rgba(10,10,10,0.8);
+backdrop-filter:blur(24px);
+border-bottom:1px solid rgba(201,168,76,0.08);
+display:flex;align-items:center;justify-content:space-between;
+transition:all .4s;
+}
+nav.scrolled{padding:.7rem 2rem;background:rgba(10,10,10,0.95);border-bottom-color:rgba(201,168,76,0.2)}
+.nav-brand{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+.nav-brand-text{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--white);letter-spacing:.03em}
+.nav-brand-sub{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);display:block;margin-top:-2px}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{
+color:var(--white-muted);text-decoration:none;font-size:.8rem;
+font-weight:400;letter-spacing:.12em;text-transform:uppercase;
+transition:color .3s;position:relative;
+}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{
+background:var(--gold);color:var(--black);padding:.55rem 1.4rem;
+font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+text-decoration:none;transition:all .3s;cursor:pointer;border:none;font-family:var(--sans);
+}
+.nav-cta:hover{background:var(--gold-light)}
+
+/* HAMBURGER */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001;background:none;border:none;padding:5px}
+.hamburger span{width:24px;height:2px;background:var(--gold);transition:all .3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+/* HERO */
+.hero{
+min-height:100vh;display:flex;flex-direction:column;
+align-items:center;justify-content:center;text-align:center;
+padding:8rem 2rem 5rem;position:relative;
+background:radial-gradient(ellipse at 50% 20%,rgba(201,168,76,0.05) 0%,transparent 60%),var(--black);
+}
+.hero::before{
+content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+width:1px;height:100px;background:linear-gradient(to bottom,transparent,var(--gold));
+}
+.hero-badge{
+font-size:.65rem;letter-spacing:.5em;text-transform:uppercase;
+color:var(--gold);margin-bottom:2rem;font-weight:500;
+padding:.5rem 1.5rem;border:1px solid rgba(201,168,76,0.2);
+animation:fadeInUp .8s ease-out;
+}
+.hero h1{
+font-family:var(--serif);font-size:clamp(2.8rem,6vw,5rem);
+font-weight:700;margin-bottom:1.5rem;line-height:1.05;
+animation:fadeInUp .8s ease-out .15s both;
+}
+.hero h1 span{color:var(--gold)}
+.hero h1 em{font-style:normal;color:var(--white-muted);font-weight:400;font-size:.85em}
+.hero-sub{
+font-size:1.1rem;color:var(--white-muted);max-width:520px;
+margin:0 auto 3rem;font-weight:300;line-height:1.8;
+animation:fadeInUp .8s ease-out .3s both;
+}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation:fadeInUp .8s ease-out .45s both}
+.btn-gold{
+padding:.9rem 2.5rem;font-size:.85rem;font-weight:600;
+letter-spacing:.12em;text-transform:uppercase;
+background:var(--gold);color:var(--black);border:1px solid var(--gold);
+cursor:pointer;text-decoration:none;transition:all .3s;font-family:var(--sans);
+}
+.btn-gold:hover{background:var(--gold-light);border-color:var(--gold-light)}
+.btn-outline{
+padding:.9rem 2.5rem;font-size:.85rem;font-weight:500;
+letter-spacing:.12em;text-transform:uppercase;
+background:transparent;color:var(--gold);border:1px solid rgba(201,168,76,0.4);
+cursor:pointer;text-decoration:none;transition:all .3s;font-family:var(--sans);
+}
+.btn-outline:hover{background:rgba(201,168,76,0.08);border-color:var(--gold)}
+
+/* STATS BAR */
+.stats-bar{
+display:flex;justify-content:center;gap:0;
+margin-top:4rem;animation:fadeInUp .8s ease-out .6s both;
+}
+.stat{text-align:center;padding:0 3rem;border-right:1px solid var(--gray)}
+.stat:last-child{border-right:none}
+.stat-num{font-family:var(--serif);font-size:2.5rem;font-weight:700;color:var(--gold)}
+.stat-label{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--white-muted);margin-top:.2rem}
+
+/* SECTIONS */
+.section{padding:6rem 2rem}
+.section-header{text-align:center;margin-bottom:4rem}
+.section-tag{font-size:.65rem;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;display:block;font-weight:500}
+.section-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:600;line-height:1.15;margin-bottom:1rem}
+.section-title span{color:var(--gold)}
+.section-sub{font-size:1rem;color:var(--white-muted);max-width:550px;margin:0 auto;font-weight:300;line-height:1.7}
+.section-line{width:50px;height:1px;background:var(--gold);margin:1.5rem auto 0}
+
+/* HISTORIA */
+.historia{max-width:650px;margin:0 auto}
+.historia-text h3{font-family:var(--serif);font-size:1.8rem;font-weight:600;margin-bottom:1rem;line-height:1.3}
+.historia-text h3 span{color:var(--gold)}
+.historia-text p{font-size:.95rem;color:var(--white-muted);font-weight:300;line-height:1.8;margin-bottom:1rem}
+.historia-visual{
+background:var(--black-card);border:1px solid var(--gray);
+padding:2.5rem;position:relative;
+}
+.historia-visual::before{
+content:'';position:absolute;top:-1px;left:30px;right:30px;height:2px;
+background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.historia-quote{font-family:var(--serif);font-size:1.4rem;font-weight:500;line-height:1.5;font-style:italic;color:var(--white);margin-bottom:1.5rem}
+.historia-author{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+
+/* PASOS */
+.pasos-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.paso{background:var(--black-card);border:1px solid var(--gray);padding:2.5rem 2rem;position:relative;transition:all .4s}
+.paso:hover{border-color:rgba(201,168,76,0.3);transform:translateY(-4px)}
+.paso::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .4s;transform-origin:left}
+.paso:hover::before{transform:scaleX(1)}
+.paso-num{font-family:var(--serif);font-size:3rem;font-weight:700;color:var(--gold);opacity:.25;margin-bottom:.5rem}
+.paso h3{font-family:var(--serif);font-size:1.15rem;font-weight:600;margin-bottom:.75rem}
+.paso p{font-size:.88rem;color:var(--white-muted);line-height:1.7;font-weight:300}
+
+/* SISTEMA */
+.sistema-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.sistema-item{
+display:flex;align-items:flex-start;gap:1rem;
+padding:1.5rem;background:var(--black-card);border:1px solid var(--gray);
+transition:all .3s;
+}
+.sistema-item:hover{border-color:rgba(201,168,76,0.25)}
+.sistema-icon{
+width:40px;height:40px;min-width:40px;
+display:flex;align-items:center;justify-content:center;
+color:var(--gold);font-size:1.2rem;
+border:1px solid rgba(201,168,76,0.2);
+}
+.sistema-item h4{font-size:.95rem;font-weight:600;margin-bottom:.3rem}
+.sistema-item p{font-size:.82rem;color:var(--white-muted);font-weight:300;line-height:1.6}
+
+/* RESULTADOS */
+.resultados{
+max-width:900px;margin:0 auto;
+background:var(--black-card);border:1px solid var(--gray);
+padding:3.5rem;position:relative;overflow:hidden;
+}
+.resultados::before{
+content:'';position:absolute;top:0;left:0;right:0;height:2px;
+background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.resultados-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center}
+.resultado-item .resultado-num{font-family:var(--serif);font-size:2.8rem;font-weight:700;color:var(--gold)}
+.resultado-item .resultado-label{font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--white-muted);margin-top:.3rem}
+
+/* FAQ */
+.faq-list{max-width:700px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--gray);overflow:hidden}
+.faq-q{
+display:flex;justify-content:space-between;align-items:center;
+padding:1.3rem 0;cursor:pointer;font-size:.95rem;font-weight:500;
+transition:color .3s;
+}
+.faq-q:hover{color:var(--gold)}
+.faq-q .faq-toggle{color:var(--gold);font-size:1.2rem;transition:transform .3s;font-weight:300}
+.faq-item.active .faq-toggle{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s ease}
+.faq-item.active .faq-a{max-height:200px;padding-bottom:1.3rem}
+.faq-a p{font-size:.88rem;color:var(--white-muted);font-weight:300;line-height:1.8}
+
+/* CTA SECTION */
+.cta-section{
+text-align:center;padding:6rem 2rem;
+background:radial-gradient(ellipse at 50% 50%,rgba(201,168,76,0.06) 0%,transparent 60%);
+}
+.cta-section h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:600;margin-bottom:1rem}
+.cta-section h2 span{color:var(--gold)}
+.cta-section p{font-size:1rem;color:var(--white-muted);font-weight:300;max-width:500px;margin:0 auto 2.5rem;line-height:1.7}
+.cta-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+/* FOOTER */
+footer{border-top:1px solid var(--gray);padding:2.5rem 2rem 1.5rem}
+.footer-inner{max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-brand{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--white)}
+.footer-brand span{display:block;font-family:var(--sans);font-size:.6rem;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;font-weight:400}
+.footer-copy{font-size:.7rem;color:var(--white-muted);letter-spacing:.1em}
+
+/* WA FLOAT */
+.wa-float{
+position:fixed;bottom:24px;right:24px;z-index:998;
+width:56px;height:56px;border-radius:50%;
+background:#25D366;display:flex;align-items:center;justify-content:center;
+box-shadow:0 4px 20px rgba(37,211,102,0.35);
+transition:transform .3s,box-shadow .3s;text-decoration:none;
+}
+.wa-float:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(37,211,102,0.5)}
+.wa-float svg{width:28px;height:28px;fill:#fff}
+
+/* MODAL AGENDAR */
+.modal-overlay{
+position:fixed;top:0;left:0;width:100%;height:100%;z-index:2000;
+background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);
+display:none;align-items:center;justify-content:center;
+padding:1rem;
+}
+.modal-overlay.active{display:flex}
+.modal{
+background:var(--black-soft);border:1px solid var(--gray);
+width:100%;max-width:480px;max-height:90vh;overflow-y:auto;
+position:relative;padding:2.5rem;
+}
+.modal-close{
+position:absolute;top:1rem;right:1.2rem;background:none;border:none;
+color:var(--white-muted);font-size:1.5rem;cursor:pointer;transition:color .3s;
+}
+.modal-close:hover{color:var(--gold)}
+.modal h3{font-family:var(--serif);font-size:1.6rem;font-weight:600;margin-bottom:.3rem}
+.modal .modal-sub{font-size:.82rem;color:var(--white-muted);margin-bottom:2rem;font-weight:300}
+
+/* CALENDAR */
+.cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.cal-header h4{font-size:.95rem;font-weight:500}
+.cal-nav{background:none;border:1px solid var(--gray);color:var(--gold);width:32px;height:32px;cursor:pointer;font-size:1rem;transition:all .3s;display:flex;align-items:center;justify-content:center}
+.cal-nav:hover{border-color:var(--gold);background:rgba(201,168,76,0.1)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:2rem}
+.cal-day-label{text-align:center;font-size:.65rem;letter-spacing:.1em;color:var(--white-muted);text-transform:uppercase;padding:.5rem 0}
+.cal-day{
+text-align:center;padding:.6rem .3rem;font-size:.82rem;
+cursor:pointer;transition:all .2s;color:var(--white-muted);
+border:1px solid transparent;
+}
+.cal-day:hover:not(.disabled):not(.empty){border-color:rgba(201,168,76,0.3);color:var(--white)}
+.cal-day.selected{background:var(--gold);color:var(--black);font-weight:600;border-color:var(--gold)}
+.cal-day.disabled{opacity:.2;cursor:default}
+.cal-day.empty{cursor:default}
+.cal-day.today{color:var(--gold);font-weight:600}
+
+/* TIME SLOTS */
+.time-section{margin-bottom:2rem;display:none}
+.time-section.visible{display:block}
+.time-section h4{font-size:.85rem;font-weight:500;margin-bottom:.8rem;color:var(--white-muted)}
+.time-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.time-slot{
+padding:.6rem;text-align:center;font-size:.8rem;
+background:var(--black-card);border:1px solid var(--gray);
+cursor:pointer;transition:all .2s;color:var(--white-muted);
+}
+.time-slot:hover{border-color:rgba(201,168,76,0.4);color:var(--white)}
+.time-slot.selected{background:var(--gold);color:var(--black);font-weight:600;border-color:var(--gold)}
+.time-slot.booked{opacity:.3;cursor:default;text-decoration:line-through;border-color:transparent}
+.time-slot.booked:hover{border-color:transparent;color:var(--white-muted)}
+.time-label{grid-column:1/-1;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);padding:.6rem 0 .2rem;font-weight:500}
+
+/* FORM FIELDS */
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--white-muted);margin-bottom:.4rem}
+.form-group input{
+width:100%;padding:.7rem .9rem;background:var(--black-card);
+border:1px solid var(--gray);color:var(--white);font-family:var(--sans);
+font-size:.88rem;transition:border-color .3s;
+}
+.form-group input:focus{outline:none;border-color:var(--gold)}
+.btn-submit{
+width:100%;padding:.85rem;background:var(--gold);color:var(--black);
+border:none;font-family:var(--sans);font-size:.85rem;font-weight:600;
+letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .3s;
+margin-top:.5rem;
+}
+.btn-submit:hover{background:var(--gold-light)}
+.btn-submit:disabled{opacity:.4;cursor:default}
+.confirm-msg{display:none;text-align:center;padding:2rem 0}
+.confirm-msg h4{font-family:var(--serif);font-size:1.3rem;color:var(--gold);margin-bottom:.5rem}
+.confirm-msg p{font-size:.88rem;color:var(--white-muted);font-weight:300;line-height:1.6}
+
+/* ANIMATIONS */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(30px);transition:all .7s ease-out}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+.nav-links{
+display:none;position:fixed;top:0;left:0;width:100%;height:100vh;
+background:rgba(10,10,10,0.97);flex-direction:column;
+align-items:center;justify-content:center;gap:2rem;
+}
+.nav-links.open{display:flex}
+.hamburger{display:flex}
+.hero h1{font-size:2.4rem}
+.stats-bar{flex-direction:column;gap:1.5rem}
+.stat{border-right:none;border-bottom:1px solid var(--gray);padding:1rem 0}
+.stat:last-child{border-bottom:none}
+.historia{grid-template-columns:1fr;gap:2rem}
+.pasos-grid{grid-template-columns:1fr}
+.sistema-grid{grid-template-columns:1fr}
+.resultados-grid{grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.time-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+<a href="#home" class="nav-brand">
+<span class="nav-brand-text">Berlin Prestige<span class="nav-brand-sub">Capacitaciones</span></span>
+</a>
+<div class="nav-links" id="navLinks">
+<a href="#historia" onclick="closeNav()">Historia</a>
+<a href="#como-funciona" onclick="closeNav()">Cómo Funciona</a>
+<a href="#sistema" onclick="closeNav()">Sistema</a>
+<a href="#faq" onclick="closeNav()">Preguntas</a>
+<button class="nav-cta" onclick="closeNav();openModal()">Agendar Llamada</button>
+</div>
+<button class="hamburger" id="hamburger" onclick="toggleNav()">
+<span></span><span></span><span></span>
+</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+<div class="hero-badge">Sin inversión · Sin riesgo · Sin experiencia</div>
+<h1>Vendé autos<br><span>que no son tuyos.</span></h1>
+<p class="hero-sub">Te doy el sistema completo para que arranques a consignar autos en tu ciudad y generes más de 1000 USD por operación.</p>
+<div class="hero-btns">
+<button class="btn-gold" onclick="openModal()">Agendar llamada gratis</button>
+<a href="https://wa.me/5491126160829?text=Hola%2C%20quiero%20más%20información%20sobre%20el%20sistema" class="btn-outline" target="_blank">Escribime por WhatsApp</a>
+</div>
+<div class="stats-bar">
+<div class="stat">
+<div class="stat-num">+100</div>
+<div class="stat-label">Personas operando</div>
+</div>
+<div class="stat">
+<div class="stat-num">8</div>
+<div class="stat-label">Autos / mes</div>
+</div>
+<div class="stat">
+<div class="stat-num">$0</div>
+<div class="stat-label">Inversión inicial</div>
+</div>
+<div class="stat">
+<div class="stat-num">$1000+</div>
+<div class="stat-label">USD por operación</div>
+</div>
+</div>
+</section>
+
+<!-- HISTORIA -->
+<section class="section" id="historia">
+<div class="section-header reveal">
+<span class="section-tag">Mi Historia</span>
+<h2 class="section-title">De la cancha a la <span>consignación</span></h2>
+<div class="section-line"></div>
+</div>
+<div class="historia">
+<div class="historia-text reveal">
+<h3>Jugaba al fútbol en <span>Europa.</span> Cuando volví, me reinventé.</h3>
+<p>No tenía contactos en el mercado automotor, no tenía agencia, no tenía nada. Descubrí la consignación de autos y me cambió todo.</p>
+<p>Hoy manejo 8 autos por mes en Buenos Aires. Cada operación me deja más de 1000 dólares. No pongo plata, no tengo salón, y laburo desde mi casa.</p>
+<p>Lo que aprendí en el deporte me sirvió más que cualquier carrera: disciplina, ejecución y no rendirse. Ahora le enseño a otros a hacer lo mismo.</p>
+</div>
+
+</div>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section class="section" id="como-funciona" style="background:var(--black-soft)">
+<div class="section-header reveal">
+<span class="section-tag">Paso a paso</span>
+<h2 class="section-title">Así de <span>simple</span> funciona</h2>
+<p class="section-sub">No necesitás experiencia, no necesitás capital, no necesitás un local. Solo el sistema y ganas de laburar.</p>
+<div class="section-line"></div>
+</div>
+<div class="pasos-grid">
+<div class="paso reveal">
+<div class="paso-num">01</div>
+<h3>Captás el auto</h3>
+<p>Encontrás a alguien que quiere vender su auto. Le decís que tenés un cliente interesado. El auto queda con el dueño, vos no ponés un peso.</p>
+</div>
+<div class="paso reveal">
+<div class="paso-num">02</div>
+<h3>Lo publicás con el sistema</h3>
+<p>Usás las herramientas que te doy: fotos profesionales con IA, descripción que vende, publicación en múltiples plataformas. Todo paso a paso.</p>
+</div>
+<div class="paso reveal">
+<div class="paso-num">03</div>
+<h3>Cobrás tu comisión</h3>
+<p>Cuando el auto se vende, te quedás con la comisión. Más de 1000 USD por operación. Todo respaldado con contratos legales.</p>
+</div>
+</div>
+</section>
+
+<!-- QUÉ INCLUYE -->
+<section class="section" id="sistema">
+<div class="section-header reveal">
+<span class="section-tag">Todo incluido</span>
+<h2 class="section-title">Lo que recibís con el <span>sistema</span></h2>
+<p class="section-sub">No improvisás en nada. Te doy cada herramienta que necesitás para operar como un profesional desde el día uno.</p>
+<div class="section-line"></div>
+</div>
+<div class="sistema-grid">
+<div class="sistema-item reveal">
+<div class="sistema-icon">§</div>
+<div><h4>Contratos legales</h4><p>Contratos de consignación profesionales que te cubren la comisión, los plazos y las condiciones. Firmado por las dos partes.</p></div>
+</div>
+<div class="sistema-item reveal">
+<div class="sistema-icon">✦</div>
+<div><h4>Scripts de captación</h4><p>Exactamente qué decirle al dueño del auto para que te lo deje vender. Probados en cientos de operaciones.</p></div>
+</div>
+<div class="sistema-item reveal">
+<div class="sistema-icon">◎</div>
+<div><h4>Sistema de fotos con IA</h4><p>Sacá fotos profesionales con tu celular. El sistema las edita y las deja como de agencia premium.</p></div>
+</div>
+<div class="sistema-item reveal">
+<div class="sistema-icon">▶</div>
+<div><h4>Scripts de cierre</h4><p>Qué decir cuando aparece el comprador para cerrar la venta y cobrar tu comisión sin improvisar.</p></div>
+</div>
+<div class="sistema-item reveal">
+<div class="sistema-icon">◈</div>
+<div><h4>Guía de publicación</h4><p>Cómo escribir descripciones que venden, dónde publicar, cómo posicionar el precio. Todo armado.</p></div>
+</div>
+<div class="sistema-item reveal">
+<div class="sistema-icon">☎</div>
+<div><h4>Acompañamiento personal</h4><p>No estás solo. Tenés soporte directo por WhatsApp y llamadas para resolver cualquier duda en el camino.</p></div>
+</div>
+</div>
+</section>
+
+<!-- RESULTADOS -->
+<section class="section" style="background:var(--black-soft)">
+<div class="section-header reveal">
+<span class="section-tag">Resultados reales</span>
+<h2 class="section-title">Números que <span>hablan solos</span></h2>
+<div class="section-line"></div>
+</div>
+<div class="resultados reveal">
+<div class="resultados-grid">
+<div class="resultado-item">
+<div class="resultado-num">+100</div>
+<div class="resultado-label">Personas operando en el país</div>
+</div>
+<div class="resultado-item">
+<div class="resultado-num">$1000+</div>
+<div class="resultado-label">USD promedio por operación</div>
+</div>
+<div class="resultado-item">
+<div class="resultado-num">30</div>
+<div class="resultado-label">Días para el primer auto</div>
+</div>
+<div class="resultado-item">
+<div class="resultado-num">$0</div>
+<div class="resultado-label">De inversión en autos</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+<div class="section-header reveal">
+<span class="section-tag">Preguntas frecuentes</span>
+<h2 class="section-title">Todo lo que <span>querés saber</span></h2>
+<div class="section-line"></div>
+</div>
+<div class="faq-list reveal">
+<div class="faq-item">
+<div class="faq-q" onclick="toggleFaq(this)"><span>¿Necesito plata para arrancar?</span><span class="faq-toggle">+</span></div>
+<div class="faq-a"><p>No. El auto es del dueño, vos no comprás nada. Solo necesitás el sistema y ganas de salir a buscar autos. Tu única inversión es el acompañamiento mensual.</p></div>
+</div>
+<div class="faq-item">
+<div class="faq-q" onclick="toggleFaq(this)"><span>¿Funciona en mi ciudad?</span><span class="faq-toggle">+</span></div>
+<div class="faq-a"><p>Si en tu ciudad hay gente vendiendo autos en Marketplace o MercadoLibre, hay negocio. Hoy tenemos gente operando en ciudades de todo el país, desde Buenos Aires hasta el interior.</p></div>
+</div>
+<div class="faq-item">
+<div class="faq-q" onclick="toggleFaq(this)"><span>¿Necesito experiencia en autos?</span><span class="faq-toggle">+</span></div>
+<div class="faq-a"><p>No. No necesitás ser mecánico ni vendedor. Te doy los scripts exactos de qué decir, cómo publicar, y cómo cerrar. El sistema está hecho para que cualquier persona pueda operar.</p></div>
+</div>
+<div class="faq-item">
+<div class="faq-q" onclick="toggleFaq(this)"><span>¿Cuánto se gana por auto?</span><span class="faq-toggle">+</span></div>
+<div class="faq-a"><p>Cada operación deja una comisión de más de 1000 USD. Depende del auto y del acuerdo con el dueño. Con 3-4 autos por mes ya tenés un ingreso muy sólido.</p></div>
+</div>
+<div class="faq-item">
+<div class="faq-q" onclick="toggleFaq(this)"><span>¿Es legal?</span><span class="faq-toggle">+</span></div>
+<div class="faq-a"><p>Sí, completamente. La consignación es un modelo legal y reconocido. Por eso te doy contratos profesionales que cubren a las dos partes y dejan todo claro desde el inicio.</p></div>
+</div>
+<div class="faq-item">
+<div class="faq-q" onclick="toggleFaq(this)"><span>¿Cuánto tiempo le tengo que dedicar?</span><span class="faq-toggle">+</span></div>
+<div class="faq-a"><p>Depende de vos. Lo podés hacer como actividad principal o como ingreso extra. Lo mínimo es dedicarle unas horas por día para captar autos, publicar y responder consultas.</p></div>
+</div>
+</div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+<div class="reveal">
+<h2>¿Listo para <span>arrancar?</span></h2>
+<p>Agendá una llamada de 15 minutos. Sin compromiso. Te muestro el sistema y vemos si aplica para tu ciudad.</p>
+<div class="cta-buttons">
+<button class="btn-gold" onclick="openModal()">Agendar llamada gratis</button>
+<a href="https://wa.me/5491126160829?text=QUIERO" class="btn-outline" target="_blank">Mandame QUIERO</a>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div class="footer-inner">
+<div class="footer-brand">Berlin Prestige<span>Capacitaciones</span></div>
+<div class="footer-copy">&copy; 2026 Berlin Prestige. Todos los derechos reservados.</div>
+</div>
+</footer>
+
+<!-- WA FLOAT -->
+<a href="https://wa.me/5491126160829?text=Hola%2C%20quiero%20info%20sobre%20el%20sistema%20de%20consignaci%C3%B3n" class="wa-float" target="_blank">
+<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- MODAL AGENDAR -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+<div class="modal">
+<button class="modal-close" onclick="closeModal()">&times;</button>
+<div id="bookingForm">
+<h3>Agend&aacute; tu llamada</h3>
+<p class="modal-sub">15 minutos. Sin compromiso. Eleg&iacute; fecha y hora.</p>
+<div class="cal-header">
+<button class="cal-nav" onclick="changeMonth(-1)">&#8249;</button>
+<h4 id="calMonthYear"></h4>
+<button class="cal-nav" onclick="changeMonth(1)">&#8250;</button>
+</div>
+<div class="cal-grid" id="calGrid"></div>
+<div class="time-section" id="timeSection">
+<h4>Eleg&iacute; un horario</h4>
+<div class="time-grid" id="timeGrid"></div>
+</div>
+<div class="form-group">
+<label>Tu nombre</label>
+<input type="text" id="bookName" placeholder="Ej: Juan P&eacute;rez">
+</div>
+<div class="form-group">
+<label>Tu WhatsApp</label>
+<input type="tel" id="bookPhone" placeholder="Ej: 11 2345-6789">
+</div>
+<div class="form-group">
+<label>Tu ciudad</label>
+<input type="text" id="bookCity" placeholder="Ej: C&oacute;rdoba">
+</div>
+<button class="btn-submit" id="btnConfirm" onclick="confirmBooking()" disabled>Confirmar reuni&oacute;n</button>
+</div>
+<div class="confirm-msg" id="confirmMsg">
+<h4>Reuni&oacute;n agendada!</h4>
+<p id="confirmDetails"></p>
+<p style="margin-top:1rem;color:var(--gold)">Te va a llegar una confirmaci&oacute;n por WhatsApp. Preparate para arrancar.</p>
+</div>
+</div>
+</div>
+
+<script>
+// NAV
+var navbar=document.getElementById('navbar');
+window.addEventListener('scroll',function(){navbar.classList.toggle('scrolled',window.scrollY>60)});
+function toggleNav(){
+document.getElementById('navLinks').classList.toggle('open');
+document.getElementById('hamburger').classList.toggle('active');
+}
+function closeNav(){
+document.getElementById('navLinks').classList.remove('open');
+document.getElementById('hamburger').classList.remove('active');
+}
+
+// REVEAL
+var revealEls=document.querySelectorAll('.reveal');
+var revealObs=new IntersectionObserver(function(entries){
+entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target)}})
+},{threshold:0.12});
+revealEls.forEach(function(el){revealObs.observe(el)});
+
+// FAQ
+function toggleFaq(el){el.parentElement.classList.toggle('active')}
+
+// MODAL
+function openModal(){document.getElementById('modalOverlay').classList.add('active');document.body.style.overflow='hidden'}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('active');document.body.style.overflow=''}
+
+// BOOKING STORAGE
+function getBooked(){try{return JSON.parse(localStorage.getItem('bp_books'))||{};}catch(e){return {};}}
+function saveSlot(key,time){var b=getBooked();if(!b[key])b[key]=[];b[key].push(time);localStorage.setItem('bp_books',JSON.stringify(b));}
+function isBooked(key,time){var b=getBooked();return b[key]&&b[key].indexOf(time)!==-1;}
+
+// CALENDAR
+var curDate=new Date();
+var selDate=null;
+var selTime=null;
+var days=['Dom','Lun','Mar','Mi\u00e9','Jue','Vie','S\u00e1b'];
+var months=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+function renderCal(){
+var g=document.getElementById('calGrid');
+var y=curDate.getFullYear();
+var m=curDate.getMonth();
+document.getElementById('calMonthYear').textContent=months[m]+' '+y;
+g.innerHTML='';
+days.forEach(function(d){var el=document.createElement('div');el.className='cal-day-label';el.textContent=d;g.appendChild(el);});
+var first=new Date(y,m,1).getDay();
+var total=new Date(y,m+1,0).getDate();
+var today=new Date();today.setHours(0,0,0,0);
+var i;
+for(i=0;i<first;i++){var emp=document.createElement('div');emp.className='cal-day empty';g.appendChild(emp);}
+for(i=1;i<=total;i++){
+var dt=new Date(y,m,i);
+var off=dt<today||dt.getDay()===0;
+var sel=selDate&&dt.getTime()===selDate.getTime();
+var c='cal-day';
+if(off)c+=' disabled';
+if(dt.getTime()===today.getTime())c+=' today';
+if(sel)c+=' selected';
+var cel=document.createElement('div');cel.className=c;cel.textContent=i;
+if(!off){cel.setAttribute('data-y',y);cel.setAttribute('data-m',m);cel.setAttribute('data-d',i);
+cel.addEventListener('click',function(){
+selDate=new Date(parseInt(this.getAttribute('data-y')),parseInt(this.getAttribute('data-m')),parseInt(this.getAttribute('data-d')));
+selTime=null;renderCal();renderTime();checkOk();
+});}
+g.appendChild(cel);
+}
+}
+
+function renderTime(){
+var sec=document.getElementById('timeSection');
+var g=document.getElementById('timeGrid');
+if(!selDate){sec.classList.remove('visible');return;}
+sec.classList.add('visible');
+g.innerHTML='';
+var now=new Date();
+var dk=selDate.getFullYear()+'-'+(selDate.getMonth()+1)+'-'+selDate.getDate();
+
+var lbl1=document.createElement('div');lbl1.className='time-label';lbl1.textContent='Ma\u00f1ana / Tarde';g.appendChild(lbl1);
+makeSlots(8,17,g,dk,now);
+
+var lbl2=document.createElement('div');lbl2.className='time-label';lbl2.textContent='Noche';g.appendChild(lbl2);
+makeSlots(21,23,g,dk,now);
+}
+
+function makeSlots(startH,endH,grid,dk,now){
+var h=startH,mn=0;
+while(h<endH){
+var lbl=String(h).padStart(2,'0')+':'+String(mn).padStart(2,'0');
+var dis=false;
+var bk=isBooked(dk,lbl);
+if(selDate.toDateString()===now.toDateString()){
+if(h<now.getHours()||(h===now.getHours()&&mn<=now.getMinutes()))dis=true;
+}
+var cls='time-slot';
+if(bk)cls+=' booked';
+else if(dis)cls+=' disabled';
+if(selTime===lbl&&!bk)cls+=' selected';
+var d=document.createElement('div');d.className=cls;
+d.textContent=bk?lbl+' \u2717':lbl;
+if(!dis&&!bk){d.setAttribute('data-t',lbl);
+d.addEventListener('click',function(){selTime=this.getAttribute('data-t');renderTime();checkOk();});}
+grid.appendChild(d);
+mn+=45;if(mn>=60){h+=Math.floor(mn/60);mn=mn%60;}
+}
+}
+
+function checkOk(){
+document.getElementById('btnConfirm').disabled=!(selDate&&selTime&&document.getElementById('bookName').value&&document.getElementById('bookPhone').value);
+}
+document.getElementById('bookName').addEventListener('input',checkOk);
+document.getElementById('bookPhone').addEventListener('input',checkOk);
+document.getElementById('bookCity').addEventListener('input',checkOk);
+
+function confirmBooking(){
+var name=document.getElementById('bookName').value;
+var phone=document.getElementById('bookPhone').value;
+var city=document.getElementById('bookCity').value;
+var ds=selDate.getDate()+'/'+(selDate.getMonth()+1)+'/'+selDate.getFullYear();
+var dk=selDate.getFullYear()+'-'+(selDate.getMonth()+1)+'-'+selDate.getDate();
+saveSlot(dk,selTime);
+fetch('https://formsubmit.co/ajax/Berlinprestige2026@gmail.com',{
+method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+body:JSON.stringify({_subject:'Nueva reunion agendada - Berlin Prestige',Nombre:name,WhatsApp:phone,Ciudad:city,Fecha:ds,Hora:selTime,message:'Reunion con Nico el '+ds+' a las '+selTime})
+}).catch(function(){});
+document.getElementById('bookingForm').style.display='none';
+var cm=document.getElementById('confirmMsg');cm.style.display='block';
+document.getElementById('confirmDetails').textContent='Reunion con Nico el '+ds+' a las '+selTime+'.';
+}
+
+function changeMonth(dir){curDate.setMonth(curDate.getMonth()+dir);selDate=null;selTime=null;
+document.getElementById('timeSection').classList.remove('visible');renderCal();checkOk();}
+
+renderCal();
+</script>
+
+</body>
+</html>
